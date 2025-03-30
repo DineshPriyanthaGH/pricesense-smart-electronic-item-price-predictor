@@ -3,143 +3,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laptop Price Prediction</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Laptop Price Predictor</title>
+    
     <style>
-        body {
-            background: white;
-            color: black;
-        }
-
-        .glass-card {
-            backdrop-filter: blur(15px);
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
         }
         
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 40px rgba(0, 150, 255, 0.5);
+        body {
+            background: rgba(9, 9, 9, 0.5);
+            padding: 0 10px;
+            text-align: center;
+        }
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            animation: fadeIn 1.5s ease-in-out;
+            z-index: 9999;
+            
         }
 
-        .btn {
-            background: #1a1a1a;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 10px;
-            transition: 0.3s;
+        
+        .wrapper {
+            max-width: 500px;
+            width: 100%;
+            background: #fff;
+            margin: 20px auto;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.125);
+            padding: 30px;
         }
-        .btn:hover {
-            background: #333;
+        
+        .wrapper .title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: black;
+            text-transform: uppercase;
+            text-align: center;
         }
+        
+        .wrapper .form {
+            width: 100%;
+        }
+        
+        .wrapper .form .inputfield {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .wrapper .form .inputfield label {
+            width: 200px;
+            color: rgb(6, 6, 6);
+            margin-right: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .check {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .check label {
+            padding: 0px 10px 0px 0px;
+        }
+
+        .wrapper .form .inputfield .input {
+            width: 100%;
+            outline: none;
+            border: 1px solid #d5dbd9;
+            font-size: 15px;
+            padding: 8px 10px;
+            border-radius: 3px;
+        }
+
+        .wrapper .form .inputfield .custom_select {
+            position: relative;
+            width: 100%;
+            height: 37px;
+        }
+
+        .wrapper .form .inputfield .custom_select select {
+            width: 100%;
+            height: 100%;
+            border: 0px;
+            padding: 8px 10px;
+            font-size: 15px;
+            border: 1px solid #d5dbd9;
+            border-radius: 3px;
+        }
+
+        .wrapper .form .inputfield .btn {
+            width: 100%;
+            padding: 8px 10px;
+            font-size: 15px;
+            border: 0px;
+            background: black;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: rgb(233, 17, 17);
+        }
+
+        .result p {
+            text-align: center;
+            color: blue;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
     </style>
 </head>
-<body class="flex flex-col items-center min-h-screen justify-center">
-    <div id="loading" class="fixed top-0 left-0 w-full h-full bg-white flex flex-col items-center justify-center z-50">
-        <img src="https://static.vecteezy.com/system/resources/previews/005/475/064/non_2x/personal-computer-concepts-vector.jpg" alt="Laptop Loading" class="w-24 h-24 animate-pulse">
-        <p class="mt-4 text-lg font-semibold text-gray-700 animate-bounce">Loading Laptop Price Predictor...</p>
+<body>
+    <div class="loading-screen" id="loading">
+        
+        
+        <span class="animate-text" style="align-items: center;">Laptop Predictor Loading........</span><br> </div>
+
+    <div class="wrapper">
+        <h2 class="title">Laptop Price Predictor</h2>
+
+        <form action="/predict/laptop" method="post" class="form">
+            <div class="inputfield">
+                <label for="Ram">RAM (GB):</label>
+                <input type="number" name="Ram" class="input" required>
+            </div>
+
+            <div class="inputfield">
+                <label for="Weight">Weight (kg):</label>
+                <input type="text" name="Weight" class="input" required>
+            </div>
+
+            <div class="inputfield">
+                <label for="Touchscreen">Touchscreen:</label>
+                <select name="Touchscreen" class="custom_select" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="inputfield">
+                <label for="Ips">IPS Display:</label>
+                <select name="Ips" class="custom_select" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="inputfield">
+                <label for="Company">Company:</label>
+                <select name="Company" class="custom_select" required>
+                    <option value="Apple">Apple</option>
+                    <option value="Dell">Dell</option>
+                    <option value="HP">HP</option>
+                    <option value="Lenovo">Lenovo</option>
+                    <option value="MSI">MSI</option>
+                    <option value="Asus">Asus</option>
+                    <option value="Acer">Acer</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="inputfield">
+                <label for="TypeName">Type:</label>
+                <select name="TypeName" class="custom_select" required>
+                    <option value="Notebook">Notebook</option>
+                    <option value="Gaming">Gaming</option>
+                    <option value="Ultrabook">Ultrabook</option>
+                    <option value="Workstation">Workstation</option>
+                    <option value="Netbook">Netbook</option>
+                    <option value="2 in 1 Convertible">2 in 1 Convertible</option>
+                </select>
+            </div>
+
+            <div class="inputfield">
+                <label for="OpSys">Operating System:</label>
+                <select name="OpSys" class="custom_select" required>
+                    <option value="Windows">Windows</option>
+                    <option value="Mac">Mac</option>
+                    <option value="Linux">Linux</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="inputfield">
+                <label for="cpu_name">CPU:</label>
+                <select name="cpu_name" class="custom_select" required>
+                    <option value="Intel Core i7">Intel Core i7</option>
+                    <option value="Intel Core i5">Intel Core i5</option>
+                    <option value="Intel Core i3">Intel Core i3</option>
+                    <option value="AMD">AMD</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="inputfield">
+                <label for="Gpu_name">GPU:</label>
+                <select name="Gpu_name" class="custom_select" required>
+                    <option value="Nvidia">Nvidia</option>
+                    <option value="AMD">AMD</option>
+                    <option value="Intel">Intel</option>
+                </select>
+            </div>
+
+            <div class="inputfield">
+                <button type="submit" class="btn">Predict Price</button>
+            </div>
+        </form>
+
+        {% if pred is not none %}
+            <p class="result">Predicted Price: LKR{{ pred }}</p>
+        {% endif %}
     </div>
-
-    <h1 class="text-4xl font-bold text-blue-600 mb-6">Laptop Price Prediction</h1>
-
-    <form action="/predict_laptop" method="POST" class="glass-card w-full max-w-lg">
-        <div class="grid grid-cols-2 gap-4">
-            <div>
-                <label class="block text-sm font-semibold">RAM (GB)</label>
-                <input type="number" name="Ram" class="w-full p-2 border rounded" required>
-            </div>
-            <div>
-                <label class="block text-sm font-semibold">Weight (kg)</label>
-                <input type="number" step="0.01" name="Weight" class="w-full p-2 border rounded" required>
-            </div>
-            <div>
-                <label class="block text-sm font-semibold">Touchscreen</label>
-                <select name="Touchscreen" class="w-full p-2 border rounded">
-                    <option value="0">No</option>
-                    <option value="1">Yes</option>
-                </select>
-            </div>
-            <div>
-                <label class="block text-sm font-semibold">IPS Display</label>
-                <select name="Ips" class="w-full p-2 border rounded">
-                    <option value="0">No</option>
-                    <option value="1">Yes</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="mt-4">
-            <label class="block text-sm font-semibold">Laptop Brand</label>
-            <select name="Company" class="w-full p-2 border rounded">
-                <option value="Acer">Acer</option>
-                <option value="Apple">Apple</option>
-                <option value="Asus">Asus</option>
-                <option value="Dell">Dell</option>
-                <option value="HP">HP</option>
-                <option value="Lenovo">Lenovo</option>
-                <option value="MSI">MSI</option>
-                <option value="Other">Other</option>
-                <option value="Toshiba">Toshiba</option>
-            </select>
-        </div>
-
-        <div class="mt-4">
-            <label class="block text-sm font-semibold">Laptop Type</label>
-            <select name="TypeName" class="w-full p-2 border rounded">
-                <option value="Notebook">Notebook</option>
-                <option value="Ultrabook">Ultrabook</option>
-                <option value="Gaming">Gaming</option>
-                <option value="Workstation">Workstation</option>
-                <option value="Convertible">Convertible</option>
-            </select>
-        </div>
-
-        <div class="mt-4">
-            <label class="block text-sm font-semibold">Operating System</label>
-            <select name="OpSys" class="w-full p-2 border rounded">
-                <option value="Windows">Windows</option>
-                <option value="Mac">Mac</option>
-                <option value="Linux">Linux</option>
-                <option value="Other">Other</option>
-            </select>
-        </div>
-
-        <div class="mt-4">
-            <label class="block text-sm font-semibold">Processor</label>
-            <select name="cpu_name" class="w-full p-2 border rounded">
-                <option value="Intel Core i3">Intel Core i3</option>
-                <option value="Intel Core i5">Intel Core i5</option>
-                <option value="Intel Core i7">Intel Core i7</option>
-                <option value="AMD">AMD</option>
-                <option value="Other">Other</option>
-            </select>
-        </div>
-
-        <div class="mt-4">
-            <label class="block text-sm font-semibold">GPU</label>
-            <select name="Gpu_name" class="w-full p-2 border rounded">
-                <option value="Intel">Intel</option>
-                <option value="Nvidia">Nvidia</option>
-                <option value="AMD">AMD</option>
-            </select>
-        </div>
-
-        <div class="mt-6 flex justify-between">
-            <a href="/" class="btn">Back</a>
-            <button type="submit" class="btn">Predict Price</button>
-        </div>
-    </form>
-
-</body>
 <script>
-    window.onload = function() {
-        setTimeout(() => {
-            document.getElementById('loading').style.display = 'none';
-        }, 2000);
-    };
-</script>
-</html>
+    
+        const loadingScreen = document.getElementById('loading');
 
+        window.onload = function() {
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 2000);
+        };
+    
+</script>
+</body>
+</html>
